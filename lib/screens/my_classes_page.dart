@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'course_detail_page.dart';
 
 class MyClassesPage extends StatelessWidget {
   const MyClassesPage({super.key});
@@ -24,7 +25,7 @@ class MyClassesPage extends StatelessWidget {
       },
       {
         'name': 'Kewarganegaraan',
-        'code': 'CIV303-C',
+        'code': 'CIV303-D', // Uniquified if needed
         'instructor': 'Dr. Budi Utomo',
         'startDate': '10 Sep 2024',
         'semester': 'Semester 1',
@@ -87,6 +88,7 @@ class MyClassesPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final course = courses[index];
           return _buildCourseCard(
+            context,
             course['name'],
             course['code'],
             course['instructor'],
@@ -100,6 +102,7 @@ class MyClassesPage extends StatelessWidget {
   }
 
   Widget _buildCourseCard(
+    BuildContext context,
     String title,
     String code,
     String instructor,
@@ -222,16 +225,15 @@ class MyClassesPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.pink,
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                            ),
-                            child: const Text('Masuk Kelas'),
-                          ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CourseDetailPage(courseName: title),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.pink,
                               foregroundColor: Colors.white,
@@ -240,7 +242,7 @@ class MyClassesPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            child: const Text('Tugas'),
+                            child: const Text('Masuk Kelas'),
                           ),
                         ],
                       ),
@@ -255,4 +257,3 @@ class MyClassesPage extends StatelessWidget {
     );
   }
 }
-
