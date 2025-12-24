@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'notification_page.dart';
+import 'announcement_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -167,35 +168,44 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.pink),
                   ),
                   const SizedBox(height: 15),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.pink.withOpacity(0.05),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.pink.withOpacity(0.1)),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.campaign_rounded, color: Colors.pink, size: 40),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Libur Semester Ganjil',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Libur dimulai dari tanggal 25 Desember...',
-                                style: TextStyle(color: Colors.grey, fontSize: 14),
-                              ),
-                            ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AnnouncementPage()),
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.pink.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.pink.withOpacity(0.1)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.campaign_rounded, color: Colors.pink, size: 40),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Libur Semester Ganjil',
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Libur dimulai dari tanggal 25 Desember...',
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          const Icon(Icons.chevron_right_rounded, color: Colors.pink, size: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ],
