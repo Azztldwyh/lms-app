@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'lesson_content_page.dart';
 
 class CourseDetailPage extends StatelessWidget {
   final String courseName;
@@ -41,7 +42,7 @@ class CourseDetailPage extends StatelessWidget {
 
   Widget _buildMeetingList() {
     final List<Map<String, String>> meetings = [
-      {'title': 'Pengantar User Interface Design', 'desc': 'Pendahuluan dan kontrak perkuliahan'},
+      {'title': 'Pengantar User Interface Design', 'desc': 'Pendahuluan and kontrak perkuliahan'},
       {'title': 'Konsep User Interface Design', 'desc': 'Prinsip desain dan elemen dasar UI'},
       {'title': 'Interaksi pada User Interface Design', 'desc': 'Model interaksi dan user behavior'},
       {'title': 'Ethnographic Observation', 'desc': 'Metode riset pasar dan observasi pengguna'},
@@ -91,7 +92,14 @@ class CourseDetailPage extends StatelessWidget {
               ),
             ),
             trailing: const Icon(Icons.play_circle_fill_rounded, color: Colors.pink),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LessonContentPage(title: meetings[index]['title']!),
+                ),
+              );
+            },
           ),
         );
       },
