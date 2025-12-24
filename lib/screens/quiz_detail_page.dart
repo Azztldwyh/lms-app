@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quiz_question_page.dart';
 
 class QuizDetailPage extends StatelessWidget {
   final String quizTitle;
@@ -143,7 +144,14 @@ class QuizDetailPage extends StatelessWidget {
                 width: double.infinity,
                 height: 55,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuizQuestionPage(quizTitle: quizTitle),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink,
                     foregroundColor: Colors.white,
