@@ -1,8 +1,41 @@
 import 'package:flutter/material.dart';
 import 'edit_profile_page.dart';
+import 'login_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('Log Out', style: TextStyle(fontWeight: FontWeight.bold)),
+        content: const Text('Apakah Anda yakin ingin keluar dari aplikasi?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal', style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+                (route) => false, // Remove all previous screens
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.pink,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            child: const Text('Ya, Keluar', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +157,13 @@ class ProfilePage extends StatelessWidget {
                   _buildMenuItem(context, Icons.person_outline_rounded, 'Informasi User'),
                   _buildMenuItem(context, Icons.security_rounded, 'Aktivitas Login'),
                   const SizedBox(height: 10),
-                  _buildMenuItem(context, Icons.logout_rounded, 'Log Out', isLogout: true),
+                  _buildMenuItem(
+                    context, 
+                    Icons.logout_rounded, 
+                    'Log Out', 
+                    isLogout: true,
+                    onTap: () => _showLogoutDialog(context),
+                  ),
                 ],
               ),
             ),
