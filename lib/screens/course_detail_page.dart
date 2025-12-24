@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'lesson_content_page.dart';
 import 'assignment_detail_page.dart';
+import 'quiz_detail_page.dart';
 
 class CourseDetailPage extends StatelessWidget {
   final String courseName;
@@ -32,16 +33,16 @@ class CourseDetailPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            _buildMeetingList(),
+            _buildMeetingList(context),
             _buildTaskList(context),
-            const Center(child: Text('Daftar Kuis Kosong')),
+            _buildQuizList(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMeetingList() {
+  Widget _buildMeetingList(BuildContext context) {
     final List<Map<String, String>> meetings = [
       {'title': 'Pengantar User Interface Design', 'desc': 'Pendahuluan and kontrak perkuliahan'},
       {'title': 'Konsep User Interface Design', 'desc': 'Prinsip desain dan elemen dasar UI'},
@@ -187,6 +188,108 @@ class CourseDetailPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => AssignmentDetailPage(assignmentTitle: item['title']!),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildQuizList(BuildContext context) {
+    final List<Map<String, String>> quizzes = [
+      {
+        'title': 'Quiz Review 01',
+        'deadline': '26 Desember 2025',
+        'status': 'Selesai',
+        'score': '85'
+      },
+      {
+        'title': 'Quiz Review 02',
+        'deadline': '5 Januari 2026',
+        'status': 'Belum dikerjakan',
+        'score': '-'
+      },
+    ];
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(20),
+      itemCount: quizzes.length,
+      itemBuilder: (context, index) {
+        final item = quizzes[index];
+        final bool isDone = item['status'] == 'Selesai';
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.02),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.all(15),
+            leading: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: (isDone ? Colors.pink : Colors.orange).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.quiz_rounded,
+                color: isDone ? Colors.pink : Colors.orange,
+              ),
+            ),
+            title: Text(
+              item['title']!,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 5),
+                Text('Deadline: ${item['deadline']}', style: const TextStyle(fontSize: 12)),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: (isDone ? Colors.green : Colors.orange).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        item['status']!,
+                        style: TextStyle(
+                          color: isDone ? Colors.green : Colors.orange,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    if (isDone) ...[
+                      const SizedBox(width: 8),
+                      Text(
+                        'Nilas: ${item['score']}',
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.pink),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+            trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuizDetailPage(quizTitle: item['title']!),
                 ),
               );
             },
