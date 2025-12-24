@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'notification_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -60,7 +61,12 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const NotificationPage()),
+                          );
+                        },
                         icon: const Icon(Icons.notifications_outlined, color: Colors.white, size: 28),
                       ),
                     ],
@@ -77,9 +83,14 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildQuickMenu(Icons.home_rounded, 'Home', Colors.pink),
-                  _buildQuickMenu(Icons.notifications_rounded, 'Notifikasi', Colors.pink),
-                  _buildQuickMenu(Icons.class_rounded, 'Kelas Saya', Colors.pink),
+                  _buildQuickMenu(context, Icons.home_rounded, 'Home', Colors.pink, () {}),
+                  _buildQuickMenu(context, Icons.notifications_rounded, 'Notifikasi', Colors.pink, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NotificationPage()),
+                    );
+                  }),
+                  _buildQuickMenu(context, Icons.class_rounded, 'Kelas Saya', Colors.pink, () {}),
                 ],
               ),
             ),
@@ -226,23 +237,26 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickMenu(IconData icon, String label, Color color) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            shape: BoxShape.circle,
+  Widget _buildQuickMenu(BuildContext context, IconData icon, String label, Color color, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: 28),
           ),
-          child: Icon(icon, color: color, size: 28),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-        ),
-      ],
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          ),
+        ],
+      ),
     );
   }
 
@@ -293,4 +307,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
