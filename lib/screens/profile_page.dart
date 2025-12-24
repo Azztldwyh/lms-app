@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'edit_profile_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -112,13 +113,18 @@ class ProfilePage extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.pink),
                   ),
                   const SizedBox(height: 15),
-                  _buildMenuItem(Icons.info_outline_rounded, 'About Me'),
-                  _buildMenuItem(Icons.class_outlined, 'Kelas'),
-                  _buildMenuItem(Icons.edit_note_rounded, 'Edit Profile'),
-                  _buildMenuItem(Icons.person_outline_rounded, 'Informasi User'),
-                  _buildMenuItem(Icons.security_rounded, 'Aktivitas Login'),
+                  _buildMenuItem(context, Icons.info_outline_rounded, 'About Me'),
+                  _buildMenuItem(context, Icons.class_outlined, 'Kelas'),
+                  _buildMenuItem(context, Icons.edit_note_rounded, 'Edit Profile', onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const EditProfilePage()),
+                    );
+                  }),
+                  _buildMenuItem(context, Icons.person_outline_rounded, 'Informasi User'),
+                  _buildMenuItem(context, Icons.security_rounded, 'Aktivitas Login'),
                   const SizedBox(height: 10),
-                  _buildMenuItem(Icons.logout_rounded, 'Log Out', isLogout: true),
+                  _buildMenuItem(context, Icons.logout_rounded, 'Log Out', isLogout: true),
                 ],
               ),
             ),
@@ -154,7 +160,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String title, {bool isLogout = false}) {
+  Widget _buildMenuItem(BuildContext context, IconData icon, String title, {bool isLogout = false, VoidCallback? onTap}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -183,9 +189,8 @@ class ProfilePage extends StatelessWidget {
           Icons.chevron_right_rounded,
           color: isLogout ? Colors.red.withOpacity(0.5) : Colors.grey,
         ),
-        onTap: () {},
+        onTap: onTap ?? () {},
       ),
     );
   }
 }
-
